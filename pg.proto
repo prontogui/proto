@@ -1,0 +1,25 @@
+// Copyright 2024 ProntoGUI, LLC.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+// Version 0.0.2
+
+//import "google/protobuf/empty.proto";
+//import "google/protobuf/any.proto";
+
+// Hmmm, there are possible language-specific options.  Each project that uses the RPC/API
+// files for ProntoGUI may need to import them into more specialized .proto files.
+option go_package = ".";
+
+message PGUpdate {
+    // CBOR encoded structure representing the update.
+    bytes cbor = 1;
+}
+
+// A simple symetric service that can be implemented by either the service or app or both.  This
+// service streams updates bidirectionally between both sides.
+service PGService {
+    rpc StreamUpdates(stream PGUpdate) returns(stream PGUpdate);
+}
